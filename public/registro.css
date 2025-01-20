@@ -1,0 +1,29 @@
+       /* Estilos específicos para el formulario*/
+       .form-container {
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #282828;
+        padding: 20px;
+        border-radius: 8px;
+    }
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+        color: #eee;
+    }
+    .form-container input[type="text"],
+    .form-container input[type="password"],
+    .form-container input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #444;
+        background-color: #333;
+        color: #eee;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .form-container .error-message {
+        color: red;
+        margin-bottom: 10px;
+    }

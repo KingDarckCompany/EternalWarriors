@@ -1,0 +1,440 @@
+:root {
+    /* Colores principales */
+    --color-background: #181818;
+    --color-background-lighter: #222;
+    --color-background-header: #282828;
+    --color-text: #eee;
+    --color-text-light: #aaa;
+    --color-primary: #ffd700; /* Dorado */
+    --color-primary-hover: #e6be00;
+    --color-secondary: #111;
+
+    /* Fuentes */
+    --font-family: 'Arial', sans-serif;
+
+    /* Espaciado */
+    --spacing-small: 10px;
+    --spacing-medium: 20px;
+    --spacing-large: 30px;
+    --padding-medium: 20px;
+    --padding-large: 50px;
+
+    /* Tamaños */
+    --max-width-container: 1200px;
+    /*--logo-size: 100px;*/
+}
+
+/* Estilos generales */
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+    cursor: url("/images/cursor.svg"), auto; /* Reemplaza cursor.svg con la ruta correcta */
+}
+
+a {
+    cursor: url("/images/cursor-click.svg"), pointer; /* Reemplaza cursor-click.svg con la ruta correcta */
+}
+
+.container {
+    max-width: var(--max-width-container);
+    margin: 0 auto;
+    padding: 0 var(--padding-medium);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+/* Estilos del encabezado */
+header {
+    background-color: var(--color-background-header);
+    padding: var(--padding-medium) 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    width: var(--logo-size);
+    height: var(--logo-size);
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+/* Por defecto, solo muestra el logo de escritorio */
+.logo-mobile {
+    display: none;
+}
+
+/* Cambiar el color del logo SVG para dispositivos móviles */
+.logo-mobile svg path {
+    fill: #FF5733; /* Color del logo */
+}
+
+/* Escalado del logo al hacer hover (opcional) */
+.logo-mobile img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* En pantallas pequeñas (móviles), muestra el logo móvil y oculta el de escritorio */
+@media (max-width: 768px) {
+    .logo-desktop {
+        display: none;
+    }
+
+    .logo-mobile {
+        display: block;
+    }
+}
+
+/* Opcional: Ajustar el tamaño del logo móvil */
+.logo-mobile img {
+    max-width: 100%; /* Cambia según el diseño */
+    height: auto;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav li {
+    margin-left: var(--spacing-medium);
+}
+
+nav a {
+    color: var(--color-text);
+    text-decoration: none;
+    padding: 5px var(--spacing-small);
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--color-primary);
+}
+
+.user-actions {
+    margin-left: var(--spacing-medium);
+}
+
+/* Estilos de la sección Hero */
+#hero {
+    position: relative;
+    overflow: hidden;
+    height: 902px; /* Altura del hero. Ajusta según necesites */
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    text-align: center;
+    color: var(--color-text);
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Cubre todo el ancho */
+    height: 100%; /* Cubre toda la altura */
+    background: no-repeat;
+    background-size: cover; /* Escala la imagen para cubrir todo el contenedor */
+    background-position: center; /* Centra la imagen */
+    z-index: -1;
+    transform: translateZ(0); /* Importante para el paralaje en algunos navegadores */
+    /*object-fit: fill;*/
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.408), rgba(101, 45, 11, 0.332));
+    z-index: 0; /* Se ajusta el z-index para que esté sobre el background pero debajo del contenido */
+}
+
+.hero-content {
+    z-index: 1; /* El contenido estará sobre el overlay */
+    position: relative;
+    padding: 20px; /* Añade un pequeño padding para que el texto no esté pegado a los bordes en pantallas pequeñas*/
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content h1 {
+    font-size: 3em;
+    margin-bottom: var(--spacing-medium);
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    padding: 15px var(--spacing-large);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-button:hover {
+    background-color: var(--color-primary-hover);
+    transform: scale(1.05);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* .hero-image {
+    display: none;
+}*/
+
+
+.hero-backgroundsss {
+    position: absolute; /* Posiciona la imagen dentro del contenedor */
+    top: 0; /* Alinea al borde superior */
+    left: 0; /* Alinea al borde izquierdo */
+    right: 0; /* Alinea al borde derecho */
+    bottom: 0; /* Alinea al borde inferior */
+    background-size: cover; /* Asegura que la imagen cubra el contenedor */
+    background-position: bottom; /* Alinea la imagen al borde inferior */
+    z-index: -1; /* Mueve la imagen detrás del contenido */
+}
+
+/* Estilos de las características */
+#caracteristicas {
+    padding: var(--padding-large) 0;
+    background-color: var(--color-background-lighter);
+    text-align: center;
+}
+
+#caracteristicas .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: var(--spacing-large);
+}
+
+.caracteristica img {
+    width: 250px;
+    margin: 0 auto var(--spacing-medium);
+}
+
+/* Estilos de las noticias */
+#noticias-recientes {
+    padding: var(--padding-large) 0;
+}
+
+#noticias-recientes .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: var(--spacing-large);
+}
+
+.noticia {
+    background-color: var(--color-background-header);
+    padding: var(--padding-medium);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.noticia img {
+    margin-bottom: var(--spacing-medium);
+}
+
+.leer-mas {
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: var(--spacing-small);
+}
+
+/* Estilos del pie de página */
+footer {
+    background-color: var(--color-background-header);
+    padding: var(--padding-medium) 0;
+    text-align: center;
+    color: var(--color-text-light);
+}
+
+footer a {
+    color: var(--color-text-light);
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+/* Media Queries para la responsividad */
+@media (max-width: 900px) {
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav li {
+        margin: var(--spacing-small) 0;
+    }
+
+    .user-actions {
+        margin: var(--spacing-small) 0;
+        text-align: center;
+    }
+
+    #hero {
+        height: 400px; /* Altura del hero en pantallas más pequeñas*/
+    }
+
+    .hero-image {
+        display: block;
+       margin: var(--spacing-medium) auto;
+        max-width: 50%;
+    }
+
+    .hero-content h1 {
+        font-size: 2em;
+    }
+    .logo {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-image {
+        max-width: 90%;
+    }
+    .logo {
+        width: 80px;
+        height: 80px;
+    }
+
+}
+
+@media (max-width: 10px) {
+    #hero {
+        border: 2px dashed red; /* Agrega un borde de guía */
+    }
+
+    .hero-background {
+        max-width: 902px;
+        max-height: 731px;
+        background-size: cover; /* Escala la imagen para cubrir todo el contenedor */
+        background-position: center; /* Centra la imagen */
+        background-position: bottom; /* Alinea la imagen al borde inferior */
+    }
+
+    .logo {
+        width: 80px;
+        height: 80px;
+    }
+
+}
+
+
+.menu-toggle {
+    background: none; /* Elimina cualquier fondo por defecto */
+    border: none; /* Elimina bordes */
+    padding: 0; /* Elimina el espacio interno del botón */
+    display: none; /* Asegura una estructura flexible */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    cursor: pointer; /* Cambia el cursor a un puntero */
+}
+
+.menu-icon {
+    width: 60px; /* Ajusta el tamaño de la imagen según lo que necesites */
+    height: auto;
+    transition: transform 0.3s ease-in-out; /* Animación opcional */
+}
+
+/* Opcional: Animación al pasar el mouse */
+.menu-toggle:hover .menu-icon {
+    transform: scale(1.1); /* Efecto de agrandamiento al pasar el mouse */
+}
+
+.bar { /* Estilos de las barras */
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--color-text);
+    margin: 5px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Transiciones suaves */
+}
+nav.active .bar:nth-child(1){
+    transform: translateY(8px) rotate(45deg);
+}
+nav.active .bar:nth-child(3){
+    transform: translateY(-8px) rotate(-45deg);
+}
+nav.active .bar:nth-child(2){
+    opacity: 0;
+}
+
+nav.main-nav { /* Estilos iniciales de la navegación */
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+nav.main-nav ul{
+    display: flex;
+}
+@media (max-width: 900px) {
+    .menu-toggle {
+        display: block; /* Se muestra en pantallas pequeñas */
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+    nav.main-nav {
+        display: none; /* Oculta la navegación en pantallas pequeñas */
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-background-header);
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    nav.main-nav.active{
+        display: flex;
+    }
+    nav.main-nav ul{
+        flex-direction: column;
+    }
+    nav.main-nav li{
+        margin: 10px 0;
+    }
+    .user-actions{
+        margin: 10px 0;
+        text-align: center;
+    }
+}

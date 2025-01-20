@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eternal Warriors - MMORPG</title>
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+    <meta name="description" content="Sumérgete en el mundo de Eldoria, un MMORPG de fantasía épica. Explora vastos territorios, lucha contra poderosos monstruos y forja tu leyenda.">
+    <meta name="keywords" content="MMORPG, juego online, fantasía, rol, Eldoria, aventura, multijugador">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <!-- Logo para escritorio -->
+            <a href="/" class="logo logo-desktop">
+                <img src="/images/logo-escritorio.svg" alt="Logo E/W Escritorio" width="250" height="auto">
+            </a>
+    
+            <!-- Logo para móviles -->
+            <a href="/" class="logo logo-mobile">
+                <img src="/images/logo-moviles.svg" alt="Logo E/W Móviles" width="150" height="auto">
+            </a>
+    
+            <button class="menu-toggle" aria-label="Menú">
+                <img src="/images/hamburg.svg" alt="Menú" class="menu-icon">
+            </button>
+    
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="noticias.html">Noticias</a></li>
+                    <li><a href="descargas.html">Descargas</a></li>
+                    <li><a href="comunidad.html">Comunidad</a></li>
+                    <li><a href="soporte.html">Soporte</a></li>
+                    <li><a href="tienda.html">Tienda</a></li>
+                </ul>
+                <div class="user-actions" id="userActions">
+                    <a href="login.html">Iniciar Sesión</a> / 
+                    <a href="registro.html">Registrarse</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="hero-background" style="background-image: url('hero/hero-4-1.png');"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>Embárcate en una Aventura Épica</h1>
+                <p>Descubre un mundo lleno de magia, misterio y peligros en Eternal Warriors. Elige tu clase, forja alianzas y conviértete en una leyenda.</p>
+                <a href="registro.html" class="cta-button">¡Juega Gratis Ahora!</a>
+            </div>
+        </section>
+
+        <section id="caracteristicas">
+            <h2>Características Principales</h2>
+            <div class="caracteristica">
+                <img src="/images/SilkroadOnline.png" alt="Icono de Clases">
+                <h3>Diversas Clases</h3>
+                <p>Elige entre guerreros, magos, arqueros y más, cada uno con habilidades únicas.</p>
+            </div>
+            <div class="caracteristica">
+                <!--<img src="icono-mundo.png" alt="Icono de Mundo Abierto">-->
+                <h3>Mundo Abierto Extenso</h3>
+                <p>Explora vastos territorios, desde frondosos bosques hasta peligrosas mazmorras.</p>
+            </div>
+            <div class="caracteristica">
+                <img src="/images/icono-pvp.svg" alt="Icono de PvP">
+                <h3>Combate PvP Intenso</h3>
+                <p>Enfréntate a otros jugadores en emocionantes batallas por la gloria.</p>
+            </div>
+        </section>
+
+        <section id="noticias-recientes">
+            <h2>Últimas Noticias</h2>
+            <div class="noticia">
+                <!--<img src="noticia1.jpg" alt="Imagen de la Noticia 1">-->
+                <h3>Nuevo Evento de Temporada: La Caza Salvaje</h3>
+                <p>Únete a la cacería de bestias legendarias y obtén recompensas exclusivas.</p>
+                <a href="noticia1.html" class="leer-mas">Leer más</a>
+            </div>
+            <div class="noticia">
+                <!--<img src="noticia2.jpg" alt="Imagen de la Noticia 2">-->
+                <h3>Actualización del Sistema de Clanes</h3>
+                <p>Forma clanes más fuertes y conquista nuevos territorios junto a tus amigos.</p>
+                <a href="noticia2.html" class="leer-mas">Leer más</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Eternal Warriors. Todos los derechos reservados. | <a href="privacidad.html">Política de Privacidad</a> | <a href="terminos.html">Términos de Uso</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const userActions = document.getElementById('userActions');
+
+        function updateNav() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    const decodedToken = payload;
+                    if (decodedToken.role === 'admin') {
+                        userActions.innerHTML = `
+                            <span>Administrador</span> /
+                            <a href="/admin" id="adminLink">Panel de Administración</a> /
+                            <a href="#" onclick="logout()">Cerrar Sesión</a>
+                        `;
+                    } else {
+                        userActions.innerHTML = `
+                            <span>Usuario</span> /
+                            <a href="#" onclick="logout()">Cerrar Sesión</a>
+                        `;
+                    }
+                } catch (error) {
+                    console.error('Error al decodificar el token:', error);
+                    localStorage.removeItem('token');
+                    window.location.reload();
+                }
+            } else {
+                userActions.innerHTML = `
+                    <a href="login.html">Iniciar Sesión</a> /
+                    <a href="registro.html">Registrarse</a>
+                `;
+            }
+        }
+
+        async function goToAdminPanel() {
+    const token = localStorage.getItem('token'); // Obtiene el token del localStorage usando la clave CORRECTA "token"
+    console.log("Token obtenido del localStorage:", token);
+
+    if (!token) {
+        console.error("No hay token disponible.");
+        alert("Debes iniciar sesión para acceder al panel de administración.");
+        return;
+    }
+
+    const authHeader = `Bearer ${token}`;
+    console.log("Cabecera Authorization que se enviará:", authHeader);
+
+    try {
+        const response = await fetch('/admin', {
+            method: 'GET',
+            headers: {
+                'Authorization': authHeader
+            }
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Error al acceder al panel de administración:', errorText);
+            alert("No tienes permisos para acceder al panel de administración.");
+            return;
+        }
+
+        window.location.href = '/admin';
+
+    } catch (error) {
+        console.error('Error en la petición fetch:', error);
+        alert("Error al contactar al servidor.");
+    }
+}
+
+        function logout() {
+            localStorage.removeItem('token');
+            updateNav();
+            window.location.href = '/'; // Redirigir al inicio después del logout
+        }
+
+        window.addEventListener('storage', updateNav);
+        updateNav();
+
+        // Obtener el enlace *después* de que se haya actualizado el DOM
+        let adminLink = document.getElementById('adminLink');
+        if (adminLink) {
+            adminLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                goToAdminPanel();
+            });
+        }
+
+    </script>
+</body>
+</html>

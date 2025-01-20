@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Eternal Warriors</title>
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos adicionales para la página de administración */
+        .admin-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #282828;
+            border-radius: 8px;
+            color: #eee;
+        }
+
+        .admin-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #444;
+            border-radius: 5px;
+        }
+
+        .admin-section h2 {
+            margin-top: 0;
+            color: #eee;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .admin-table th, .admin-table td {
+            border: 1px solid #444;
+            padding: 8px;
+            text-align: left;
+        }
+        .admin-table th{
+            background-color: #333;
+        }
+
+        .cta-button{
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff; /* Color azul */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="/" class="logo logo-desktop">
+                <img src="/images/logo-escritorio.svg" alt="Logo E/W Escritorio" width="250" height="auto">
+            </a>
+            <a href="/" class="logo logo-mobile">
+                <img src="/images/logo-moviles.svg" alt="Logo E/W Móviles" width="150" height="auto">
+            </a>
+            <button class="menu-toggle" aria-label="Menú">
+                <img src="/images/hamburg.svg" alt="Menú" class="menu-icon">
+            </button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="noticias.html">Noticias</a></li>
+                    <li><a href="descargas.html">Descargas</a></li>
+                    <li><a href="comunidad.html">Comunidad</a></li>
+                    <li><a href="soporte.html">Soporte</a></li>
+                    <li><a href="tienda.html">Tienda</a></li>
+                </ul>
+                <div class="user-actions">
+                    <span>Administrador</span> / <a href="#">Cerrar Sesión</a> 
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <h1>Panel de Administración</h1>
+
+        <section class="admin-section" id="gestion-usuarios">
+            <h2>Gestión de Usuarios</h2>
+            <button class="cta-button">Ver Usuarios</button> <button class="cta-button">Buscar Usuario</button>
+            <table class="admin-table" id="tabla-usuarios" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de Usuario</th>
+                        <th>Correo Electrónico</th>
+                        <th>Fecha de Registro</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </section>
+
+        <section class="admin-section" id="gestion-noticias">
+            <h2>Gestión de Noticias</h2>
+            <button class="cta-button">Crear Noticia</button> <button class="cta-button">Editar Noticia</button> <button class="cta-button">Eliminar Noticia</button>
+            </section>
+
+        <section class="admin-section" id="gestion-productos">
+            <h2>Gestión de Productos (Tienda)</h2>
+            <button class="cta-button">Agregar Producto</button> <button class="cta-button">Editar Producto</button> <button class="cta-button">Eliminar Producto</button>
+            </section>
+
+        <section class="admin-section" id="estadisticas">
+            <h2>Estadísticas</h2>
+            </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Eternal Warriors. Todos los derechos reservados. | <a href="privacidad.html">Política de Privacidad</a> | <a href="terminos.html">Términos de Uso</a></p>
+        </div>
+    </footer>
+    <script>
+        const verUsuariosBtn = document.querySelector("#gestion-usuarios button");
+        const tablaUsuarios = document.querySelector("#tabla-usuarios");
+        const tbody = tablaUsuarios.querySelector('tbody'); // Obtener el tbody una sola vez
+
+        verUsuariosBtn.addEventListener("click", () => {
+            tablaUsuarios.style.display = tablaUsuarios.style.display === "none" ? "table" : "none";
+
+            if (tablaUsuarios.style.display === "table" && tbody.innerHTML === "") { // Solo cargar si la tabla está visible y vacía
+                fetch('/admin/usuarios', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 401 || response.status === 403) {
+                            alert("No tienes permisos para acceder a esta página. Inicia sesión como administrador.");
+                            localStorage.removeItem('token');
+                            window.location.href = 'login.html';
+                        } else if(response.status === 500){
+                            alert("Error del servidor, contacte al administrador")
+                        }
+                        throw new Error(`Error en la petición: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(usuarios => {
+                    tbody.innerHTML = ''; // Limpiar la tabla ANTES del bucle
+                    usuarios.forEach(usuario => {
+                        const row = tbody.insertRow();
+                        const idCell = row.insertCell();
+                        const nombreCell = row.insertCell();
+                        const emailCell = row.insertCell();
+                        const fechaCell = row.insertCell();
+                        const accionesCell = row.insertCell();
+
+                        idCell.textContent = usuario.IdUsuario;
+                        nombreCell.textContent = usuario.NombreUsuario;
+                        emailCell.textContent = usuario.CorreoElectronico;
+                        fechaCell.textContent = usuario.FechaRegistro;
+                        accionesCell.innerHTML = '<button class="cta-button">Editar</button> <button class="cta-button">Eliminar</button>';
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener los usuarios:', error);
+                    alert('Error al cargar la tabla de usuarios.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

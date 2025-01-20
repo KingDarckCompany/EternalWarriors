@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Eternal Warriors</title>
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos específicos para el formulario */
+        .form-container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #282828;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            color: #eee;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #eee;
+            border-radius: 5px;
+            box-sizing: border-box; /* Incluir padding y border en el ancho total */
+        }
+        .form-container .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <!-- Logo para escritorio -->
+            <a href="/" class="logo logo-desktop">
+                <img src="/images/logo-escritorio.svg" alt="Logo E/W Escritorio" width="250" height="auto">
+            </a>
+    
+            <!-- Logo para móviles -->
+            <a href="/" class="logo logo-mobile">
+                <img src="/images/logo-moviles.svg" alt="Logo E/W Móviles" width="150" height="auto">
+            </a>
+    
+            <button class="menu-toggle" aria-label="Menú"> <!-- Botón hamburguesa -->
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+    
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="noticias.html">Noticias</a></li>
+                    <li><a href="descargas.html">Descargas</a></li>
+                    <li><a href="comunidad.html">Comunidad</a></li>
+                    <li><a href="soporte.html">Soporte</a></li>
+                    <li><a href="tienda.html">Tienda</a></li>
+                </ul>
+                <div class="user-actions">
+                    <a href="login.html">Iniciar Sesión</a> / <a href="registro.html">Registrarse</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-title">
+            <div class="container">
+                <h1>Iniciar Sesión</h1>
+            </div>
+        </section>
+
+        <section class="form-container">
+            <form id="loginForm">
+                <div class="error-message" id="errorMessage"></div>
+                <label for="username">Nombre de Usuario:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit" class="cta-button">Iniciar Sesión</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Eternal Warriors. Todos los derechos reservados. | <a href="privacidad.html">Política de Privacidad</a> | <a href="terminos.html">Términos de Uso</a></p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            let errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = '';
+
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+
+            if (username.trim() === '' || password.trim() === '') {
+                errorMessage.textContent = 'Por favor, completa todos los campos.';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: username, password: password }), // ***CLAVES CORRECTAS: username y password***
+                });
+
+                const contentType = response.headers.get('Content-Type');
+                console.log('Tipo de respuesta:', contentType);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Error en el servidor:', errorText);
+                    errorMessage.textContent = `Error en el servidor: ${response.status} - ${response.statusText}`;
+                    return;
+                }
+
+                if (contentType && contentType.includes('application/json')) {
+                    const data = await response.json();
+                    localStorage.setItem('token', data.token);
+                    window.location.href = 'index.html';
+                } else {
+                    const errorText = await response.text();
+                    console.error('El servidor no devolvió JSON:', errorText);
+                    errorMessage.textContent = 'El servidor devolvió una respuesta inesperada.';
+                }
+            } catch (error) {
+                console.error('Error en la petición fetch:', error);
+                errorMessage.textContent = "Error al conectar con el servidor.";
+            }
+        });
+    </script>
+</body>
+</html>

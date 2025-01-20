@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte - Eternal Warriors</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      #soporte-content {
+        padding: 50px 0;
+      }
+      .faq-section {
+        margin-bottom: 40px;
+      }
+      .faq-section h2 {
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ffd700;
+        padding-bottom: 10px;
+      }
+      .faq-item {
+        margin-bottom: 20px;
+        border: 1px solid #444;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #282828;
+      }
+      .faq-item h3 {
+        cursor: pointer; /* Indica que es clickeable */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .faq-item .respuesta {
+        display: none; /* Oculta la respuesta por defecto */
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #444;
+      }
+      .faq-item.active .respuesta {
+        display: block; /* Muestra la respuesta cuando está activo */
+      }
+      .contacto-info{
+        margin-top: 30px;
+      }
+      .contacto-info p{
+        margin-bottom: 10px;
+      }
+    </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+        <!-- Logo para escritorio -->
+        <a href="/" class="logo logo-desktop">
+            <img src="/images/logo-escritorio.svg" alt="Logo E/W Escritorio" width="250" height="auto">
+        </a>
+
+        <!-- Logo para móviles -->
+        <a href="/" class="logo logo-mobile">
+            <img src="/images/logo-moviles.svg" alt="Logo E/W Móviles" width="150" height="auto">
+        </a>
+
+        <button class="menu-toggle" aria-label="Menú"> <!-- Botón hamburguesa -->
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="noticias.html">Noticias</a></li>
+                <li><a href="descargas.html">Descargas</a></li>
+                <li><a href="comunidad.html">Comunidad</a></li>
+                <li><a href="soporte.html">Soporte</a></li>
+                <li><a href="tienda.html">Tienda</a></li>
+            </ul>
+            <div class="user-actions">
+                <a href="login.html">Iniciar Sesión</a> / <a href="registro.html">Registrarse</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main>
+        <section class="page-title">
+            <div class="container">
+                <h1>Soporte</h1>
+            </div>
+        </section>
+
+        <section id="soporte-content">
+            <div class="container">
+                <div class="faq-section">
+                    <h2>Preguntas Frecuentes (FAQ)</h2>
+
+                    <div class="faq-item">
+                        <h3 onclick="toggleFAQ(this)">¿Cómo creo una cuenta?<span style="font-size: 1.2em;">+</span></h3>
+                        <div class="respuesta">
+                            <p>Para crear una cuenta, visita la página de registro y completa el formulario con tu información.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 onclick="toggleFAQ(this)">¿Cuáles son los requisitos del sistema?<span style="font-size: 1.2em;">+</span></h3>
+                        <div class="respuesta">
+                            <p>Los requisitos mínimos son: Windows 7/8/10, procesador Intel Core i3, 4GB de RAM y una tarjeta gráfica compatible con DirectX 11.</p>
+                        </div>
+                    </div>
+                  <div class="faq-item">
+                        <h3 onclick="toggleFAQ(this)">¿Cómo recupero mi contraseña?<span style="font-size: 1.2em;">+</span></h3>
+                        <div class="respuesta">
+                            <p>Puedes recuperar tu contraseña haciendo click en "¿Olvidaste tu contraseña?" en la página de inicio de sesión. Sigue los pasos que se te indican en el correo.</p>
+                        </div>
+                    </div>
+                    </div>
+
+                <div class="contacto-info">
+                  <h2>Contacto</h2>
+                  <p>Si no encuentras la respuesta a tu pregunta, puedes contactarnos a través de:</p>
+                  <p>Correo electrónico: <a href="mailto:soporte@eldoria.com">soporte@eldoria.com</a></p>
+                  <p>Foro de la comunidad: <a href="#">Enlace al Foro</a></p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Eternal Warriors. Todos los derechos reservados. | <a href="privacidad.html">Política de Privacidad</a> | <a href="terminos.html">Términos de Uso</a></p>
+        </div>
+    </footer>
+
+    <script>
+      function toggleFAQ(element) {
+        element.parentNode.classList.toggle('active');
+        const span = element.querySelector('span');
+        span.textContent = span.textContent === '+' ? '-' : '+';
+      }
+    </script>
+</body>
+</html>
